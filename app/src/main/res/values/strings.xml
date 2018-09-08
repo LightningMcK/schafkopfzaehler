@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Schafkopfzaehler</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Schafkopf\nPunktezähler</string>
+    <string name="choosePlayers">Wer spielt mit?</string>
+    <string name="playStyle">Wer spielt was?</string>
+    <string name="points">Punkte\:</string>
+    <string name="startMain">Los geht\'s</string>
+    <string name="next">Weiter</string>
+    <string name="Player1">Spieler 1</string>
+    <string name="Player2">Spieler 2</string>
+    <string name="Player3">Spieler 3</string>
+    <string name="Player4">Spieler 4</string>
+    <string name="emptyName">Bitte geben Sie einen Namen ein!</string>
+    <string name="title_activity_main_game">MainGameActivity</string>
+</resources>

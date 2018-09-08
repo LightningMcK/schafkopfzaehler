@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/woodentable"
+    tools:context=".StartActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/germania_one"
+        android:lineSpacingExtra="0sp"
+        android:text="@string/title"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="36sp" />
+
+    <RelativeLayout
+        android:id="@+id/realtivelayout_start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/schafkopfkarten"
+            android:layout_width="334dp"
+            android:layout_height="352dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/schafkopfkarten" />
+
+        <Button
+            android:id="@+id/startChoosePlayers"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_green_dark"
+            android:fontFamily="@font/germania_one"
+            android:text="@string/startMain"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

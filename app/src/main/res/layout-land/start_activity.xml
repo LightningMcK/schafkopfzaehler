@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/woodentable"
+    tools:context=".StartActivity">
+
+    <RelativeLayout
+        android:id="@+id/realtivelayout_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/schafkopfkarten"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/title"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/schafkopfkarten"
+            android:layout_width="334dp"
+            android:layout_height="352dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/schafkopfkarten" />
+
+        <Button
+            android:id="@+id/startMain"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="164dp"
+            android:background="@android:color/holo_green_dark"
+            android:fontFamily="@font/germania_one"
+            android:text="@string/startMain"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

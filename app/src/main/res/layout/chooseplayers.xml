@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/woodentable"
+    tools:context=".StartActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/germania_one"
+        android:lineSpacingExtra="0sp"
+        android:text="@string/choosePlayers"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="36sp" />
+
+    <RelativeLayout
+        android:id="@+id/realtivelayout_choose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:stretchColumns="1">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:gravity="center_horizontal">
+
+                <EditText
+                    android:id="@+id/player1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/Player1"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColorHint="@android:color/black"
+                    android:textColorLink="@android:color/holo_green_dark"
+                    android:textSize="18sp" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp">
+
+                <EditText
+                    android:id="@+id/player4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/Player4"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColorHint="@android:color/black"
+                    android:textColorLink="@android:color/holo_green_dark"
+                    android:textSize="18sp" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/player2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/Player2"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColorHint="@android:color/black"
+                    android:textColorLink="@android:color/holo_green_dark" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="50dp"
+                android:gravity="center_horizontal">
+
+                <EditText
+                    android:id="@+id/player3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-condensed"
+                    android:hint="@string/Player3"
+                    android:inputType="text"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColorHint="@android:color/black"
+                    android:textColorLink="@android:color/holo_green_dark" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/startMain"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_green_dark"
+            android:fontFamily="@font/germania_one"
+            android:text="@string/next"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
