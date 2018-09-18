@@ -10,14 +10,14 @@ import android.widget.EditText;
 
 public class StartActivity extends AppCompatActivity {
 
-    private Button startButton;
-    private Button nextButton;
-    private String players[] = {"", "", "", ""};
+    private Button startButton, nextButton; // Button init
+    private String players[] = {"", "", "", ""}; // Player names array init
 
     private View.OnClickListener startClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick (View v) {
+            // Distinguish between the start button and the next button
             if (v == startButton) {
                 startButtonClicked();
             }
@@ -95,12 +95,10 @@ public class StartActivity extends AppCompatActivity {
             players[3] = player4.getText().toString();
         }
 
-        Log.d("Start", "nextButtonClicked --> Intent follows");
-
-        Intent intent = new Intent(this, MainGameActivity.class);
-        intent.putExtra("playerNames", players);
-        startActivity(intent);
-
+        // Start main game activity and add the player names to the intent
+            Intent intent = new Intent(this, MainGameActivity.class);
+            intent.putExtra("playerNames", players);
+            startActivity(intent);
 
     }
 

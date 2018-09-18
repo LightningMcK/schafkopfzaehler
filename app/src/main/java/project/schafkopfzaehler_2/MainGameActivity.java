@@ -9,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainGameActivity extends AppCompatActivity {
 
-    private Button p1, p2, p3, p4;
+    private Button p1, p2, p3, p4, chooseGame; // Button init
+    private TextView choice;
+    private String playerNames[] = {"", "", "", ""}; // Player names init
 
     private View.OnClickListener startClickListener = new View.OnClickListener() {
 
@@ -21,6 +24,9 @@ public class MainGameActivity extends AppCompatActivity {
             if (v == p1 || v == p2 || v == p3 || v == p4) {
                 playerButtonClicked(v);
             }
+            if (v == chooseGame) {
+                gameChoosing();
+            }
         }
     };
 
@@ -28,29 +34,27 @@ public class MainGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("MainGame", "onCreate");
-
         setContentView(R.layout.main_game_layout);
 
+        // Get player names from the activity that started this one
         Intent intent = getIntent();
-        String playerNames[] = intent.getStringArrayExtra("playerNames");
+        playerNames = intent.getStringArrayExtra("playerNames");
 
-        Log.d("MainGame", "Find Buttons");
         p1 = findViewById(R.id.p1_game);
         p2 = findViewById(R.id.p2_game);
         p3 = findViewById(R.id.p3_game);
         p4 = findViewById(R.id.p4_game);
+        chooseGame = findViewById(R.id.chooseGame);
+        choice = findViewById(R.id.announcement);
 
-        Log.d("MainGame", "Set player names into buttons");
         // Set player names into buttons
         p1.setText(playerNames[0]);
-        Log.d("MainGame", "Zero works -> one");
         p2.setText(playerNames[1]);
-        Log.d("MainGame", "one works -> two");
         p3.setText(playerNames[2]);
-        Log.d("MainGame", "Two works -> three");
         p4.setText(playerNames[3]);
-        Log.d("MainGame", "Three works");
 
+        // Start listening if buttons are clicked
+        chooseGame.setOnClickListener(startClickListener);
         p1.setOnClickListener(startClickListener);
         p2.setOnClickListener(startClickListener);
         p3.setOnClickListener(startClickListener);
@@ -58,10 +62,46 @@ public class MainGameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void playerButtonClicked (View v) {
 
         Log.d("MainGame", v + " clicked...");
 
+    }
+
+    private void gameChoosing () {
+        Intent choose = new Intent(this, ChooseGame.class);
+        choose.putExtra("playerNames", playerNames);
+        startActivityForResult(choose, 0);
+        //startActivity(choose);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == RESULT_OK) {
+                String announcement = data.getStringExtra("choice");
+                choice.setText(announcement);
+            }
+        }
     }
 
 }

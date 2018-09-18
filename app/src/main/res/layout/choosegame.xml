@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/woodentable"
+    tools:context=".ChooseGame">
+
+    <RelativeLayout
+        android:id="@+id/realtivelayout_game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/title_choosegame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/chooseGame"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/title_playstyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_choosegame"
+            android:layout_centerHorizontal="false"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/gamestyle"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <RadioGroup
+            android:id="@+id/playstyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_playstyle"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <RadioButton
+                android:id="@+id/sauspiel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/sauspiel"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/wenz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/wenz"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/solo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/solo"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_playcall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/playstyle"
+            android:layout_centerHorizontal="false"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/call"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <RadioGroup
+            android:id="@+id/calls"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_playcall"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <RadioButton
+                android:id="@+id/eichel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:drawableEnd="@drawable/eichel" />
+
+            <RadioButton
+                android:id="@+id/blatt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/blatt"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/schelle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/schelle" />
+
+            <RadioButton
+                android:id="@+id/herz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/herz"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_soloplayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/calls"
+            android:layout_centerHorizontal="false"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/soloPlayer"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <RadioGroup
+            android:id="@+id/soloplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_soloplayer"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+
+            <RadioButton
+                android:id="@+id/player1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="@string/Player1" />
+
+            <RadioButton
+                android:id="@+id/player2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Player2" />
+
+            <RadioButton
+                android:id="@+id/player3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Player3" />
+
+            <RadioButton
+                android:id="@+id/player4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Player4" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/title_choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/soloplay"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/germania_one"
+            android:lineSpacingExtra="0sp"
+            android:text="@string/choice"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/choice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_choice"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="sans-serif-condensed"
+            android:lineSpacingExtra="0sp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/gameChoosed"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_green_dark"
+            android:fontFamily="@font/germania_one"
+            android:text="@string/confirm"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

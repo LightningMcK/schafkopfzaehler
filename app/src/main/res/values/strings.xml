@@ -12,5 +12,25 @@
     <string name="Player3">Spieler 3</string>
     <string name="Player4">Spieler 4</string>
     <string name="emptyName">Bitte geben Sie einen Namen ein!</string>
-    <string name="title_activity_main_game">MainGameActivity</string>
+    <string name="chooseGame">Was wurde gespielt?</string>
+    <string name="gamestyle">Spielart</string>
+    <string name="sauspiel">Sauspiel</string>
+    <string name="wenz">Wenz</string>
+    <string name="solo">Solo</string>
+    <string name="call">Was wurde gerufen?</string>
+    <string name="soloCall">Was war die Trumpffarbe?</string>
+    <string name="title_activity_main_game">ActivityMainGame</string>
+    <string name="announcement">Neue Ansage</string>
+    <string name="announcementMade">Angesagt\:</string>
+    <string name="noChoice">Es wurde noch nichts angesagt...</string>
+    <string name="soloPlayer">Wer hat das Solo gespielt?</string>
+    <string name="choice">-- Ihre Auswahl --</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="sauspiel1">Alte</string>
+    <string name="sauspiel2">Blaue</string>
+    <string name="sauspiel3">Runde</string>
+    <string name="solo1">Eichel Solo</string>
+    <string name="solo2">Blatt Solo</string>
+    <string name="solo3">Schellen Solo</string>
+    <string name="solo4">Herz Solo</string>
 </resources>
