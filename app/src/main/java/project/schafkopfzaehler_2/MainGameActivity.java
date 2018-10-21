@@ -2,6 +2,7 @@ package project.schafkopfzaehler_2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ public class MainGameActivity extends AppCompatActivity {
     private Button p1, p2, p3, p4, chooseGame; // Button init
     private TextView choice;
     private String playerNames[] = {"", "", "", ""}; // Player names init
+    static final int REQUEST_VIDEO_CAPTURE = 1;
 
     private View.OnClickListener startClickListener = new View.OnClickListener() {
 
@@ -85,6 +87,11 @@ public class MainGameActivity extends AppCompatActivity {
     private void playerButtonClicked (View v) {
 
         Log.d("MainGame", v + " clicked...");
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
+
 
     }
 
@@ -101,6 +108,10 @@ public class MainGameActivity extends AppCompatActivity {
                 String announcement = data.getStringExtra("choice");
                 choice.setText(announcement);
             }
+        }
+
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            // Do nothing...
         }
     }
 

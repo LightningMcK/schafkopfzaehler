@@ -20,6 +20,7 @@
     <string name="call">Was wurde gerufen?</string>
     <string name="soloCall">Was war die Trumpffarbe?</string>
     <string name="title_activity_main_game">ActivityMainGame</string>
+    <string name="title_choose_game">ChooseGame</string>
     <string name="announcement">Neue Ansage</string>
     <string name="announcementMade">Angesagt\:</string>
     <string name="noChoice">Es wurde noch nichts angesagt...</string>
