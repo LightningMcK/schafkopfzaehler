@@ -1,5 +1,7 @@
 package project.schafkopfzaehler_2;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -11,10 +13,21 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import project.schafkopfzaehler_2.POJO.POJOClass;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CardCaptureActivity extends AppCompatActivity {
 
@@ -89,30 +102,73 @@ public class CardCaptureActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    /** Picture button was pressed. Send picture to server for card recognition. */
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 
             File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+
             if (pictureFile == null){
-                Log.d("CAMERA", "Error creating media file, check storage permissions");
+                Log.d("CAMERA", "Error creating media files");
                 return;
             }
 
-            try {
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
-            } catch (FileNotFoundException e) {
-                Log.d("CAMERA", "File not found: " + e.getMessage());
-            } catch (IOException e) {
-                Log.d("CAMERA", "Error accessing file: " + e.getMessage());
-            }
+            // Compress image to lower site
+            Bitmap bmp = BitmapFactory.decodeFile(pictureFile.getAbsolutePath());
+            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 20, bytes);
 
             captureLog = findViewById(R.id.capture_log);
-            captureLog.setText("Karte scannen --> an Server senden");
 
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                fos.write(bytes.toByteArray());
+                fos.close();
+                Log.d("CAMERA", "Saved...");
+                captureLog.setText(captureLog.getText() + "\n" + "Saved...");
+            } catch (FileNotFoundException e) {
+                Log.d("CAMERA", "File not found: " + e.getMessage());
+                captureLog.setText(captureLog.getText() + "\n" + "File not found: " + e.getMessage());
+            } catch (IOException e) {
+                Log.d("CAMERA", "Error accessing file: " + e.getMessage());
+                captureLog.setText(captureLog.getText() + "\n" + "Error accessing file: " + e.getMessage());
+            }
+
+            // ------------------------ Send file to server -------------------------
+            Retrofit.Builder builder = new Retrofit.Builder().baseUrl("http://192.168.0.195:8000/").addConverterFactory(GsonConverterFactory.create());
+
+            Retrofit retrofit = builder.build();
+
+            api_server client = retrofit.create(api_server.class);
+
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", pictureFile.getName(), RequestBody.create(MediaType.parse("image/*"), pictureFile));
+
+            Call<POJOClass> call = client.uploadAttachment(filePart);
+
+            try {
+                call.enqueue(new Callback<POJOClass>() {
+                    @Override
+                    public void onResponse(Call<POJOClass> call, Response<POJOClass> response) {
+                        String card = response.body().getKarte();
+                        captureLog.setText(captureLog.getText() + "\n" + card + " erkannt :)");
+                    }
+
+                    @Override
+                    public void onFailure(Call<POJOClass> call, Throwable t) {
+                        captureLog.setText(captureLog.getText() + "\n" + "Error..." + t.getMessage());
+                    }
+                });
+            }
+
+            catch (Exception e){
+                Log.d("Schafkopfzaehler", "EXCEPTION: " + e.getMessage());
+            }
+
+            // ----------------------------------------------------------------------
+
+            mCamera.startPreview();
         }
     };
 
@@ -134,25 +190,24 @@ public class CardCaptureActivity extends AppCompatActivity {
         // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "MyCameraApp");
+                Environment.DIRECTORY_PICTURES), "Schafkopfzaehler");
         // This location works best if you want the created images to be shared
         // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                Log.d("MyCameraApp", "failed to create directory");
+                Log.d("Schafkopfzaehler", "failed to create directory");
                 return null;
             }
         }
 
         // Create a media file name
-        Long tsLong = System.currentTimeMillis()/1000;
-        String timeStamp = tsLong.toString();
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE){
             mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
+                    "Karte.jpg");
+
         } else {
             return null;
         }
@@ -161,4 +216,6 @@ public class CardCaptureActivity extends AppCompatActivity {
     }
 
 }
+
+
 
