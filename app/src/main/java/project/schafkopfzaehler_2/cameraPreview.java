@@ -3,10 +3,12 @@ package project.schafkopfzaehler_2;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
+import android.util.Size;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.io.IOException;
+import java.util.List;
 
 /** A basic Camera preview class */
 public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback {
@@ -61,9 +63,24 @@ public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         mCamera.setDisplayOrientation(90);
-        //Camera.Parameters setting_param = mCamera.getParameters();
-        //setting_param.setPreviewSize(320,480);
-        //mCamera.setParameters(setting_param);
+        Camera.Parameters setting_param = mCamera.getParameters();
+        List<Camera.Size> sizes = setting_param.getSupportedPictureSizes();
+
+        Camera.Size mSize;
+        int height;
+        int width;
+        for (Camera.Size size : sizes) {
+            width = size.width;
+            height = size.height;
+            //Log.d("SHIGGY", "Available resolution" + size.width + size.height);
+            if (width >= 600 && width <= 800) {
+                setting_param.setPictureSize(width, height);
+                break;
+            }
+        }
+
+        mCamera.setParameters(setting_param);
+        // setting_param.setPreviewSize(320,480);
 
         // start preview with new settings
         try {

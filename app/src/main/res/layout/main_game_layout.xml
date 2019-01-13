@@ -82,7 +82,7 @@
                     android:text="@string/points"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="24sp" />
 
             </TableRow>
 
@@ -129,7 +129,7 @@
                     android:text="@string/points"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="24sp" />
 
                 <Space
                     android:layout_width="wrap_content"
@@ -143,7 +143,7 @@
                     android:text="@string/points"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="24sp" />
 
             </TableRow>
 
@@ -170,12 +170,12 @@
                 <TextView
                     android:id="@+id/p3_points"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:fontFamily="@font/germania_one"
                     android:text="@string/points"
                     android:textAlignment="viewStart"
                     android:textColor="@android:color/black"
-                    android:textSize="14sp" />
+                    android:textSize="24sp" />
             </TableRow>
 
         </TableLayout>

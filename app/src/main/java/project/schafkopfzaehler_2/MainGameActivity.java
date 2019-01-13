@@ -89,10 +89,28 @@ public class MainGameActivity extends AppCompatActivity {
 
     private void playerButtonClicked (View v) {
 
+        String playerNumber = "";
         Log.d("MainGame", v + " clicked...");
         // Start card capture activity with the camera preview
         Intent cardCaptureIntent = new Intent(this, CardCaptureActivity.class);
-        startActivity(cardCaptureIntent);
+
+        // Get which player button was pressed
+        if ( findViewById(R.id.p1_game) == v ) {
+            playerNumber = "p1";
+        }
+        if ( findViewById(R.id.p2_game) == v ) {
+            playerNumber = "p2";
+        }
+        if ( findViewById(R.id.p3_game) == v ) {
+            playerNumber = "p3";
+        }
+        if ( findViewById(R.id.p4_game) == v ) {
+            playerNumber = "p4";
+        }
+
+        cardCaptureIntent.putExtra("playerName", playerNumber );
+        startActivityForResult(cardCaptureIntent, 1);
+        // startActivity(cardCaptureIntent);
     }
 
     private void gameChoosing () {
@@ -103,10 +121,37 @@ public class MainGameActivity extends AppCompatActivity {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0) {
+        if (requestCode == 0 && data != null) {
             if (resultCode == RESULT_OK) {
                 String announcement = data.getStringExtra("choice");
                 choice.setText(announcement);
+            }
+        }
+        if (requestCode == 1 && data != null) {
+            if (resultCode == RESULT_OK) {
+                int points = data.getIntExtra("points", 0);
+                String player = data.getStringExtra("playerNo");
+                Log.d("MainGame", "ComeBack...: " + player + " " + points);
+                switch (player) {
+
+                    case "p1":
+                        TextView points_p1 = findViewById(R.id.p1_points);
+                        points_p1.setText("Punkte: " + points);
+                        break;
+                    case "p2":
+                        TextView points_p2 = findViewById(R.id.p2_points);
+                        points_p2.setText("Punkte: " + points);
+                        break;
+                    case "p3":
+                        TextView points_p3 = findViewById(R.id.p3_points);
+                        points_p3.setText("Punkte: " + points);
+                        break;
+                    case "p4":
+                        TextView points_p4 = findViewById(R.id.p4_points);
+                        points_p4.setText("Punkte: " + points);
+                        break;
+                }
+
             }
         }
     }

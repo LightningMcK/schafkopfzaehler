@@ -17,15 +17,32 @@
         android:layout_height="200dp"
         android:layout_above="@id/capture"
         android:background="@drawable/woodentable"
+        android:scrollbars="vertical"
         android:text="@string/app_name"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/capture_done"
+        style="?android:borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/capture"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/holo_green_dark"
+        android:fontFamily="@font/germania_one"
+        android:text="@string/confirm"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
 
     <Button
         android:id="@+id/capture"
         style="?android:borderlessButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/cameraPreview"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/holo_green_dark"
