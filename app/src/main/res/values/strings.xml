@@ -4,7 +4,7 @@
     <string name="title">Schafkopf\nPunktezähler</string>
     <string name="choosePlayers">Wer spielt mit?</string>
     <string name="playStyle">Wer spielt was?</string>
-    <string name="points">Punkte\:</string>
+    <string name="points">Punkte: </string>
     <string name="startMain">Los geht\'s</string>
     <string name="next">Weiter</string>
     <string name="Player1">Spieler 1</string>
@@ -27,6 +27,7 @@
     <string name="noChoice">Es wurde noch nichts angesagt...</string>
     <string name="soloPlayer">Wer hat das Solo gespielt?</string>
     <string name="choice">-- Ihre Auswahl --</string>
+    <string name="pictureSaved">Bild gespeichert</string>
     <string name="confirm">Bestätigen</string>
     <string name="sauspiel1">Alte</string>
     <string name="sauspiel2">Blaue</string>

@@ -1,8 +1,6 @@
 package project.schafkopfzaehler_2;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Environment;
@@ -14,8 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -35,31 +33,37 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CardCaptureActivity extends AppCompatActivity {
 
+    // Static base variables
+    private static final String serverURL = "http://192.168.1.6:8000/";
+    public static final int MEDIA_TYPE_IMAGE = 1;
+
+
+    // Camera variables
     private Camera mCamera;
     private cameraPreview mPreview;
-    private static final String serverURL = "http://192.168.1.6:8000/";
-    Button capture, confirm; // Button init
-    TextView captureLog; // TextView init
-    public static final int MEDIA_TYPE_IMAGE = 1;
+
+    // Variables from / for intent
     int points;
     String playerNumber;
 
+    Button capture, confirm; // Button init
+    TextView captureLog; // TextView init
 
-    // Add a listener to the Capture button
-    private View.OnClickListener startCaptureListener = new View.OnClickListener() {
+    // Add a listener to the capture / confirm button
+    private View.OnClickListener startClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick (View v) {
-            Log.d("SHIGGY", "Some button pressed");
 
+            // Capture button was pressed --> Take picture
             if (v == capture) {
                 mCamera.takePicture(null, null, mPicture);
             }
 
+            // Confirm button was pressed --> Send data to previous activity
             if ( v == confirm ) {
-                // Send choice to the previous activity
-                // and then finishes the current activity
-                Log.d("SHIGGY", "Confirm button pressed");
+                // Send points and player number to the previous
+                // activity and then finishes the current activity
                 Intent data = new Intent();
                 data.putExtra("points", points);
                 data.putExtra("playerNo", playerNumber);
@@ -86,7 +90,7 @@ public class CardCaptureActivity extends AppCompatActivity {
         // Create an instance of Camera
         mCamera = getCameraInstance();
 
-        // Create our Preview view and set it as the content of our activity.
+        // Create preview view and set it as the content of our activity.
         mPreview = new cameraPreview(this, mCamera);
         FrameLayout preview = findViewById(R.id.cameraPreview);
         preview.addView(mPreview);
@@ -94,21 +98,21 @@ public class CardCaptureActivity extends AppCompatActivity {
         // Start click listener
         confirm = findViewById(R.id.capture_done);
         capture = findViewById(R.id.capture);
-        confirm.setOnClickListener(startCaptureListener);
-        capture.setOnClickListener(startCaptureListener);
+        confirm.setOnClickListener(startClickListener);
+        capture.setOnClickListener(startClickListener);
 
     }
 
-    /* Get an instance of the Camera object. */
+    // Get an instance of the Camera object
     public static Camera getCameraInstance(){
         Camera c = null;
         try {
-            c = Camera.open(); // attempt to get a Camera instance
+            c = Camera.open(); // Attempt to get a Camera instance
         }
         catch (Exception e){
             // Camera is not available (in use or does not exist)
         }
-        return c; // returns null if camera is unavailable
+        return c; // Returns null if camera is unavailable
     }
 
 
@@ -134,7 +138,7 @@ public class CardCaptureActivity extends AppCompatActivity {
         super.onStart();
     }
 
-    /* Picture button was pressed. Send picture to server for card recognition. */
+    // Picture button was pressed. Send picture to server for card recognition
     private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
 
         @Override
@@ -153,47 +157,19 @@ public class CardCaptureActivity extends AppCompatActivity {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
+
+                // Show successful save to the user
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.pictureSaved), Toast.LENGTH_SHORT);
+                toast.show();
+
                 Log.d("CAMERA", "Saved...");
             } catch (FileNotFoundException e) {
                 Log.d("CAMERA", "File not found: " + e.getMessage());
-                captureLog.setText(captureLog.getText() + "\n" + "File not found: " + e.getMessage());
             } catch (IOException e) {
                 Log.d("CAMERA", "Error accessing file: " + e.getMessage());
-                captureLog.setText(captureLog.getText() + "\n" + "Error accessing file: " + e.getMessage());
             }
 
-            // ------------------------ Send file to server -------------------------
-            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(serverURL).addConverterFactory(GsonConverterFactory.create());
-
-            Retrofit retrofit = builder.build();
-
-            api_server client = retrofit.create(api_server.class);
-
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", pictureFile.getName(), RequestBody.create(MediaType.parse("image/*"), pictureFile));
-
-            Call<POJOClass> call = client.uploadAttachment(filePart);
-
-            call.enqueue(new Callback<POJOClass>() {
-                    @Override
-                    public void onResponse(Call<POJOClass> call, Response<POJOClass> response) {
-                        String card = response.body().getKarte();
-                        captureLog.setText(captureLog.getText() + "\n" + card + " erkannt!");
-                        points += getCardPoints(card);
-                        // Delete card for decreasing garbage
-                        if ( pictureFile.delete() );
-                        captureLog.setText(captureLog.getText() + "\n" + "Points: " + points);
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<POJOClass> call, Throwable t) {
-                        captureLog.setText(captureLog.getText() + "\n" + "Error..." + t.getMessage());
-                        // Delete card for decreasing garbage
-                        if ( pictureFile.delete() );
-                    }
-                });
-
-            // ----------------------------------------------------------------------
+            sendFileToServer(pictureFile);
 
             mCamera.startPreview();
         }
@@ -206,20 +182,16 @@ public class CardCaptureActivity extends AppCompatActivity {
         }
     }
 
-    /** Create a file Uri for saving an image or video */
+    // Create a file Uri for saving an image or video
     private static Uri getOutputMediaFileUri(int type){
         return Uri.fromFile(getOutputMediaFile(type));
     }
 
-    /** Create a File for saving the captured image */
+    // Create a File for saving the captured image
     private static File getOutputMediaFile(int type){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "Schafkopfzaehler");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
@@ -243,6 +215,7 @@ public class CardCaptureActivity extends AppCompatActivity {
         return mediaFile;
     }
 
+    // Returns the amount of points the player receives for the card
     private int getCardPoints (String cardName) {
 
         if (cardName.contains("Ass")) {
@@ -262,6 +235,45 @@ public class CardCaptureActivity extends AppCompatActivity {
         }
 
         return 0;
+
+    }
+
+    private void sendFileToServer (final File picture) {
+
+        Retrofit.Builder builder = new Retrofit.Builder().baseUrl(serverURL).addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+
+        api_server client = retrofit.create(api_server.class);
+
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", picture.getName(), RequestBody.create(MediaType.parse("image/*"), picture));
+
+        Call<POJOClass> call = client.uploadAttachment(filePart);
+
+        call.enqueue(new Callback<POJOClass>() {
+            @Override
+            public void onResponse(Call<POJOClass> call, Response<POJOClass> response) {
+                String card = response.body().getKarte();
+                captureLog.setText(captureLog.getText() + "\n" + card + " erkannt!");
+                points += getCardPoints(card);
+                // Delete picture to minimize memory usage
+                if ( picture.delete() );
+
+                // Show current points to user
+                Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.points) + points , Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+
+            @Override
+            public void onFailure(Call<POJOClass> call, Throwable t) {
+                captureLog.setText(captureLog.getText() + "\n" + "Error..." + t.getMessage());
+                // Delete picture to minimize memory usage
+                if ( picture.delete() );
+            }
+        });
+
+
 
     }
 

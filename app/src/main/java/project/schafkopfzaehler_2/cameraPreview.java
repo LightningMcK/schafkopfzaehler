@@ -23,12 +23,11 @@ public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // underlying surface is created and destroyed.
         mHolder = getHolder();
         mHolder.addCallback(this);
-        // deprecated setting, but required on Android versions prior to 3.0
-         // mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
     }
 
     public void surfaceCreated(SurfaceHolder holder) {
-        // The Surface has been created, now tell the camera where to draw the preview.
+        // The Surface created, now tell the camera where to draw the preview.
         try {
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
@@ -55,7 +54,7 @@ public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback
             return;
         }
 
-        // stop preview before making changes
+        // Stop preview before making changes
         try {
             mCamera.stopPreview();
         } catch (Exception e){
@@ -63,16 +62,16 @@ public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         mCamera.setDisplayOrientation(90);
+
+        // Get lowest possible resolution to minimize data traffic
         Camera.Parameters setting_param = mCamera.getParameters();
         List<Camera.Size> sizes = setting_param.getSupportedPictureSizes();
-
-        Camera.Size mSize;
         int height;
         int width;
         for (Camera.Size size : sizes) {
             width = size.width;
             height = size.height;
-            //Log.d("SHIGGY", "Available resolution" + size.width + size.height);
+
             if (width >= 600 && width <= 800) {
                 setting_param.setPictureSize(width, height);
                 break;
@@ -80,9 +79,8 @@ public class cameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         mCamera.setParameters(setting_param);
-        // setting_param.setPreviewSize(320,480);
 
-        // start preview with new settings
+        // Start preview with new resolution
         try {
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();

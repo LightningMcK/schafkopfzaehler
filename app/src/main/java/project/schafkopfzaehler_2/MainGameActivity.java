@@ -20,7 +20,6 @@ public class MainGameActivity extends AppCompatActivity {
     private Button p1, p2, p3, p4, chooseGame; // Button init
     private TextView choice;
     private String playerNames[] = {"", "", "", ""}; // Player names init
-    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private View.OnClickListener startClickListener = new View.OnClickListener() {
 
@@ -131,24 +130,24 @@ public class MainGameActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 int points = data.getIntExtra("points", 0);
                 String player = data.getStringExtra("playerNo");
-                Log.d("MainGame", "ComeBack...: " + player + " " + points);
+
                 switch (player) {
 
                     case "p1":
                         TextView points_p1 = findViewById(R.id.p1_points);
-                        points_p1.setText("Punkte: " + points);
+                        points_p1.setText(getString(R.string.points) + points);
                         break;
                     case "p2":
                         TextView points_p2 = findViewById(R.id.p2_points);
-                        points_p2.setText("Punkte: " + points);
+                        points_p2.setText(getString(R.string.points) + points);
                         break;
                     case "p3":
                         TextView points_p3 = findViewById(R.id.p3_points);
-                        points_p3.setText("Punkte: " + points);
+                        points_p3.setText(getString(R.string.points) + points);
                         break;
                     case "p4":
                         TextView points_p4 = findViewById(R.id.p4_points);
-                        points_p4.setText("Punkte: " + points);
+                        points_p4.setText(getString(R.string.points) + points);
                         break;
                 }
 
