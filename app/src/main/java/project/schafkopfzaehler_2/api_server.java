@@ -12,7 +12,7 @@ import retrofit2.http.Part;
 public interface api_server{
 
         @Multipart
-        @POST("/face_detection/detect/")
+        @POST("/Kartenerkennung/detect/")
 
         Call<POJOClass> uploadAttachment(@Part MultipartBody.Part filePart);
 
